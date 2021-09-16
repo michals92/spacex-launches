@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spacexlaunches/src/api-client/launch.dart';
+import '/src/api-client/launch.dart';
+import '/src/api-client/api.dart';
 
 
 class MyApp extends StatefulWidget {
@@ -15,19 +16,19 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    futureAlbum = fetchLaunch();
+    futureAlbum = API.fetchLaunch();
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Fetch Data Example',
+      title: 'SpaceX launches',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Fetch Data Example'),
+          title: const Text('SpaceX launches'),
         ),
         body: Center(
           child: FutureBuilder<List<Launch>>(
