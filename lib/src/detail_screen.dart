@@ -15,10 +15,12 @@ class MyDetailScreen extends StatefulWidget {
 
 class _MyDetailScreenState extends State<MyDetailScreen> {
   Launch? launch;
+  bool loading = true;
 
   _getLaunch() {
     API.fetchLaunchDetail(widget.launchId).then((response) {
       setState(() {
+        loading = false;
         launch = response;
       });
     });
@@ -36,12 +38,18 @@ class _MyDetailScreenState extends State<MyDetailScreen> {
         appBar: AppBar(
           title: const Text("Detail"),
         ),
-        body: OctoImage(
-          image: CachedNetworkImageProvider(
-              launch?.imagePatch ?? ""
+        body:
+
+        Visibility(
+          child: OctoImage(
+
+            image: CachedNetworkImageProvider(
+                launch?.imagePatch ?? ""
+            ),
+            errorBuilder: OctoError.icon(color: Colors.red),
+            fit: BoxFit.cover,
           ),
-          errorBuilder: OctoError.icon(color: Colors.red),
-          fit: BoxFit.cover,
+          visible: !loading,
         )
         // body: Text(launch?.name ?? "")
     );
