@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:octo_image/octo_image.dart';
 import 'api-client/api.dart';
 import 'api-client/launch.dart';
 
@@ -34,7 +36,14 @@ class _MyDetailScreenState extends State<MyDetailScreen> {
         appBar: AppBar(
           title: const Text("Detail"),
         ),
-        body: Text(launch?.name ?? "")
+        body: OctoImage(
+          image: CachedNetworkImageProvider(
+              launch?.imagePatch ?? ""
+          ),
+          errorBuilder: OctoError.icon(color: Colors.red),
+          fit: BoxFit.cover,
+        )
+        // body: Text(launch?.name ?? "")
     );
   }
 }
