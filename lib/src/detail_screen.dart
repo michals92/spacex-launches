@@ -39,7 +39,6 @@ class _MyDetailScreenState extends State<MyDetailScreen> {
           title: const Text("Detail"),
         ),
         body:
-
         Visibility(
           child: OctoImage(
 

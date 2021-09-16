@@ -65,10 +65,20 @@ class _MyListScreenState extends State {
         body: ListView.builder(
           itemCount: launches.length,
           itemBuilder: (context, index) {
-            return ListTile(title: Text(launches[index].name), onTap: () {
-              Navigator.pushNamed(context, "/second", arguments: launches[index].flightNumber);
-            });
+            return ListTile(
+                tileColor: _getTileColor(launches[index].imagePatch != null),
+                title: Text(launches[index].name),
+                onTap: () {Navigator.pushNamed(context, "/second", arguments: launches[index].flightNumber);}
+                );
           },
         ));
+  }
+
+  Color _getTileColor(bool hasImage) {
+    if(hasImage) {
+      return Colors.amber;
+    } else {
+      return Colors.black;
+    }
   }
 }
