@@ -3,49 +3,58 @@ import '/src/api-client/launch.dart';
 import '/src/api-client/api.dart';
 
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  _MyAppState createState() => _MyAppState();
+  build(context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'SpaceX launches App',
+      theme: ThemeData(
+        primarySwatch: Colors.grey,
+      ),
+      home: MyListScreen(),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
-  late Future<List<Launch>> futureAlbum;
-
+class MyListScreen extends StatefulWidget {
   @override
-  void initState() {
+  createState() => _MyListScreenState();
+}
+
+class _MyListScreenState extends State {
+  var launches = List<Launch>.empty();
+
+  _getLaunches() {
+    API.fetchLaunch().then((response) {
+      setState(() {
+        launches = response;
+      });
+    });
+  }
+
+  initState() {
     super.initState();
-    futureAlbum = API.fetchLaunch();
+    _getLaunches();
+  }
+
+  dispose() {
+    super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'SpaceX launches',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
+  build(context) {
+    return Scaffold(
         appBar: AppBar(
-          title: const Text('SpaceX launches'),
+          title: Text("Launches List"),
         ),
-        body: Center(
-          child: FutureBuilder<List<Launch>>(
-            future: futureAlbum,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Text(snapshot.data?.first.name ?? "empty");
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-
-              // By default, show a loading spinner.
-              return const CircularProgressIndicator();
-            },
-          ),
-        ),
-      ),
-    );
+        body: ListView.builder(
+          itemCount: launches.length,
+          itemBuilder: (context, index) {
+            return ListTile(title: Text(launches[index].name));
+          },
+        ));
   }
 }
