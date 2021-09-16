@@ -1,11 +1,11 @@
 
 class Launch {
   final String name;
-  final bool? launchSuccess;
+  final int flightNumber;
 
-  Launch(this.name, this.launchSuccess);
+  Launch(this.name, this.flightNumber);
 
   factory Launch.fromJson(Map<String, dynamic> json) {
-    return Launch(json['mission_name'], json["launch_success"]);
+    return Launch(json['mission_name'], json["flight_number"]);
   }
 }

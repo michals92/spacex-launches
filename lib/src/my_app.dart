@@ -29,7 +29,7 @@ class _MyListScreenState extends State {
   var launches = List<Launch>.empty();
 
   _getLaunches() {
-    API.fetchLaunch().then((response) {
+    API.fetchLaunches().then((response) {
       setState(() {
         launches = response;
       });
@@ -40,11 +40,6 @@ class _MyListScreenState extends State {
   initState() {
     super.initState();
     _getLaunches();
-  }
-
-  @override
-  dispose() {
-    super.dispose();
   }
 
   @override
