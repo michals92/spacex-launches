@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '/src/api-client/launch.dart';
 import '/src/api-client/api.dart';
+import 'api-client/detail_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -10,10 +11,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'SpaceX launches App',
+      initialRoute: '/',
+      routes: {
+        // When navigating to the "/" route, build the FirstScreen widget.
+        '/': (context) => const MyListScreen(),
+        // When navigating to the "/second" route, build the SecondScreen widget.
+        '/second': (context) => const MyDetailScreen(),
+      },
       theme: ThemeData(
         primarySwatch: Colors.grey,
-      ),
-      home: const MyListScreen(),
+      )
     );
   }
 }
@@ -24,6 +31,8 @@ class MyListScreen extends StatefulWidget {
   @override
   createState() => _MyListScreenState();
 }
+
+
 
 class _MyListScreenState extends State {
   var launches = List<Launch>.empty();
@@ -51,7 +60,9 @@ class _MyListScreenState extends State {
         body: ListView.builder(
           itemCount: launches.length,
           itemBuilder: (context, index) {
-            return ListTile(title: Text(launches[index].name));
+            return ListTile(title: Text(launches[index].name), onTap: () {
+              Navigator.pushNamed(context, "/second", arguments: launches[index].flightNumber);
+            });
           },
         ));
   }

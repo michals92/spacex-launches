@@ -24,7 +24,7 @@ class API {
     if (response.statusCode == 200) {
       return Launch.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to load album');
+      throw Exception('Failed to load launch');
     }
   }
 }
