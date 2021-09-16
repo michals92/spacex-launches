@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '/src/api-client/launch.dart';
 import '/src/api-client/api.dart';
 
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -14,12 +13,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      home: MyListScreen(),
+      home: const MyListScreen(),
     );
   }
 }
 
 class MyListScreen extends StatefulWidget {
+  const MyListScreen({Key? key}) : super(key: key);
+
   @override
   createState() => _MyListScreenState();
 }
@@ -35,11 +36,13 @@ class _MyListScreenState extends State {
     });
   }
 
+  @override
   initState() {
     super.initState();
     _getLaunches();
   }
 
+  @override
   dispose() {
     super.dispose();
   }
@@ -48,7 +51,7 @@ class _MyListScreenState extends State {
   build(context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Launches List"),
+          title: const Text("Launches List"),
         ),
         body: ListView.builder(
           itemCount: launches.length,
