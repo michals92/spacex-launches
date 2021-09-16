@@ -1,23 +1,21 @@
-
-
 import 'package:flutter/material.dart';
-
-import 'api.dart';
-import 'launch.dart';
+import 'api-client/api.dart';
+import 'api-client/launch.dart';
 
 class MyDetailScreen extends StatefulWidget {
-  const MyDetailScreen({Key? key}) : super(key: key);
+  const MyDetailScreen({Key? key, required this.launchId}) : super(key: key);
+
+  final int launchId;
 
   @override
   createState() => _MyDetailScreenState();
 }
 
-class _MyDetailScreenState extends State {
+class _MyDetailScreenState extends State<MyDetailScreen> {
   Launch? launch;
-  late int launchId = 0;
 
   _getLaunch() {
-    API.fetchLaunchDetail(launchId).then((response) {
+    API.fetchLaunchDetail(widget.launchId).then((response) {
       setState(() {
         launch = response;
       });
@@ -32,12 +30,9 @@ class _MyDetailScreenState extends State {
 
   @override
   build(context) {
-
-    launchId = ModalRoute.of(context)!.settings.arguments as int;
-
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Launches List"),
+          title: const Text("Detail"),
         ),
         body: Text(launch?.name ?? "")
     );
